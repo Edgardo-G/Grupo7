@@ -1,3 +1,8 @@
+## Run in docker
+
+docker build . -t node-web-app
+docker run -p 3001:3001 -d node-web-app
+
 ## Install and Use
 
 ```sh

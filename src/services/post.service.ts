@@ -10,7 +10,7 @@ const postService = () => {
   const update = (id, data) => post.update(id, data);
   const remove = (id) => post.remove(id);
   const notifyInactiveUsers = async () => {
-    const users = post.getInactiveUsers(30);
+    const users = await post.getInactiveUsers(30);
     const result = users.map(({ email }) =>
       emailService().sendEmail(
         'info@superblog.com',

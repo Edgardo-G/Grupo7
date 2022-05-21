@@ -6,7 +6,7 @@ export default () =>
       {
         title: 'Post Title',
         body: 'Post body',
-        date: Date.now(),
+        date: '10/10/2021',
         UserId: 1,
       },
       {

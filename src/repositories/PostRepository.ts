@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { Op } from 'sequelize';
 import Repository from './Repository';
 import Post from '../models/Post';
 import User from '../models/User';
@@ -16,22 +17,19 @@ export default class PostRepository implements Repository {
 
   getInactiveUsers(days = 30) {
     return User.findAll({
-      attributes: {
-        include: [
-          [
-            sequelize.literal(`(
-              SELECT p.UserId as id, MAX(p.createdAt) as date
-              FROM posts p
-              GROUP BY UserId
-            )`),
-            's',
-          ],
-        ],
+      attributes: [
+        'id',
+        'email',
+        [sequelize.fn('MAX', sequelize.col('Posts.date')), 'date'],
+      ],
+      include: {
+        model: Post,
+        attributes: [],
       },
-      where: {
-        id: sequelize.literal('s.UserId'),
-        's.date': {
-          $gte: dayjs().subtract(days, 'days').toDate(),
+      group: 'Posts.UserId',
+      having: {
+        date: {
+          [Op.gte]: dayjs().subtract(days, 'days').toDate(),
         },
       },
     });

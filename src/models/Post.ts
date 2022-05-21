@@ -23,11 +23,4 @@ const Post = sequelize.define(
 User.hasMany(Post);
 Post.belongsTo(User);
 
-// eslint-disable-next-line
-Post.prototype.toJSON = function () {
-  const values = { ...this.get() };
-
-  return values;
-};
-
 export default Post;

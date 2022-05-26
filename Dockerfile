@@ -16,4 +16,7 @@ RUN npm install
 COPY . .
 
 EXPOSE 3001
+
+VOLUME ["/usr/src/app/db"]
+
 CMD [ "npm", "run", "start" ]
